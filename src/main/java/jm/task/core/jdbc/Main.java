@@ -28,6 +28,14 @@ public class Main {
             System.out.println(user.toString());
         }
 
+        userService.removeUserById(2);
+
+        List<User> users2 = new ArrayList<>();
+        users2 = userService.getAllUsers();
+        for(User user: users2){
+            System.out.println(user.toString());
+        }
+
         userService.cleanUsersTable();
         userService.dropUsersTable();
     }
