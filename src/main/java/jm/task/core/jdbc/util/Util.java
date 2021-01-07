@@ -5,10 +5,8 @@ import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
+import java.sql.*;
 
 public class Util {
 
@@ -34,9 +32,16 @@ public class Util {
     }
 
     public static Connection dataBaseConnection() throws SQLException {
-        Driver driver = new FabricMySQLDriver();
-        DriverManager.registerDriver(driver);
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Connection connection = null;
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("Соединение с БД установлено");
+        } catch (SQLException e) {
+            System.out.println("Ошибка при соединении с БД");
+        }
+        return connection;
     }
 
 
