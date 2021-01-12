@@ -13,7 +13,7 @@ public class Main {
 
         userService.createUsersTable();
 
-        User user1 = new User("Li", "Wong", (byte)18);
+        User user1 = new User("Li1", "Wong1", (byte)18);
         userService.saveUser(user1.getName(), user1.getLastName(), user1.getAge());
         User user2 = new User("Li2", "Wong2", (byte)19);
         userService.saveUser(user2.getName(), user2.getLastName(), user2.getAge());
@@ -29,6 +29,7 @@ public class Main {
         }
 
         userService.removeUserById(2);
+        System.out.println();
 
         List<User> users2 = new ArrayList<>();
         users2 = userService.getAllUsers();

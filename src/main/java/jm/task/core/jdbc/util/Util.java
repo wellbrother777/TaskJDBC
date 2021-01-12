@@ -10,17 +10,19 @@ import java.sql.*;
 
 public class Util {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/MyDataBase";
+    private static SessionFactory sessionFactory;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/MyDataBase?serverTimezone=PST&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "21083";
 
     public static SessionFactory getSessionFactory() {
-        SessionFactory sessionFactory = null;
+        if (sessionFactory == null) {
             try {
-                Configuration configuration = new Configuration().setProperty("connection.driver_class","com.mysql.jdbc.Driver")
-                        .setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/MyDataBase?serverTimezone=PST&allowPublicKeyRetrieval=true&useSSL=false")
-                        .setProperty("hibernate.connection.username", "root")
-                        .setProperty("hibernate.connection.password", "21083")
+                Configuration configuration = new Configuration().setProperty("hibernate.connection.driver_class","com.mysql.jdbc.Driver")
+                        .setProperty("hibernate.connection.url", URL)
+                        .setProperty("hibernate.connection.username", USERNAME)
+                        .setProperty("hibernate.connection.password", PASSWORD)
                         .addAnnotatedClass(User.class);
 
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
@@ -28,10 +30,11 @@ public class Util {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
         return sessionFactory;
     }
 
-    public static Connection dataBaseConnection() throws SQLException {
+    public static Connection dataBaseConnection() {
         Connection connection = null;
         try {
             Driver driver = new FabricMySQLDriver();
@@ -43,9 +46,4 @@ public class Util {
         }
         return connection;
     }
-
-
-
-
-
 }
